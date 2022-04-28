@@ -1,40 +1,19 @@
 pipeline {
-	agent { label 'master' }
-	stages {
-		stage('BUILD') {
-			parallel {
-				stage('BUILD1') {
-					steps {
-						sh 'echo this is my first stage in pipeline job'
-						sh 'ls -lrt'
-						sh 'sleep 5'
-					}
-				}
-				
-				stage('BUILD2') {
-					steps {
-						sh 'echo this is my first stage in pipeline job'
-						sh 'ls -lrt'
-						sh 'sleep 5'
-					}
-				}
-			}
-		}	
-		stage('TEST') {
-			steps {
-				sh ''' 
-					sleep 5
-					du -h 
-				   '''
-			}
-		}
-		stage('DEPLOY') {
-			steps {
-				sh ''' 
-					sleep 5
-					du -h 
-				   '''
-			}
-		}
-	}
+    agent none 
+    stages {
+        stage('Example Build') {
+            agent { docker 'maven:3.8.1-adoptopenjdk-11' } 
+            steps {
+                echo 'Hello, Maven'
+                sh 'mvn --version'
+            }
+        }
+        stage('Example Test') {
+            agent { docker 'openjdk:8-jre' } 
+            steps {
+                echo 'Hello, JDK'
+                sh 'java -version'
+            }
+        }
+    }
 }
