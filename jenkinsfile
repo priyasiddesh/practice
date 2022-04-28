@@ -27,7 +27,7 @@ pipeline {
         }
     }
 }
-     stages {
+    stages {
         stage('test') {
             steps {
                 echo "Hello ${params.PERSON}"
@@ -42,3 +42,4 @@ pipeline {
             }
         }
     }
+ }
